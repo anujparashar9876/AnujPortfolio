@@ -23,7 +23,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.symmetric(horizontal: 36),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.transparent, Colors.transparent],
+            colors: [Colors.white12, Colors.white38],
           ),
         ),
         child: SafeArea(
@@ -66,16 +66,22 @@ class _NavButtonState extends State<NavButton> {
       onExit: (_) => setState(() => hovering = false),
       child: GestureDetector(
         onTap: widget.onTap,
-        child: AnimatedDefaultTextStyle(
-          duration: const Duration(milliseconds: 150),
-          style: TextStyle(
-            color: hovering ? Theme.of(context).colorScheme.secondary : Colors.black87,
-            fontSize: 16,
-            fontWeight: hovering ? FontWeight.w700 : FontWeight.w500,
+        child: Container(
+          decoration: BoxDecoration(
+            color: hovering ? Theme.of(context).colorScheme.secondary.withOpacity(0.1) : Colors.transparent,
+            borderRadius: BorderRadius.circular(8),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: Text(widget.label),
+          child: AnimatedDefaultTextStyle(
+            duration: const Duration(milliseconds: 150),
+            style: TextStyle(
+              color: hovering ? Theme.of(context).colorScheme.secondary : Colors.black87,
+              fontSize: 16,
+              fontWeight: hovering ? FontWeight.w700 : FontWeight.w500,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Text(widget.label),
+            ),
           ),
         ),
       ),

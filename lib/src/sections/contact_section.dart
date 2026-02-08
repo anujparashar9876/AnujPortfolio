@@ -30,7 +30,7 @@ class ContactSection extends StatelessWidget {
                   child: const Text('Email Me'),
                 ),
                 OutlinedButton(
-                  onPressed: () => launchUrlString('www.linkedin.com/in/anuj-kumar-parashar-01527b227'),
+                  onPressed: () => launchUrlString('https://www.linkedin.com/in/anuj-kumar-parashar-01527b227/'),
                   child: const Text('LinkedIn'),
                 ),
               ],

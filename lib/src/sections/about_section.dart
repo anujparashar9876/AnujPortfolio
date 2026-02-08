@@ -25,7 +25,7 @@ class AboutSection extends StatelessWidget {
       children: [
         Expanded(
           child: GlowingProfileImage(
-  imageUrl: 'https://media.licdn.com/dms/image/v2/C5603AQGnYnN9mvWyeg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1637993001187?e=1760572800&v=beta&t=YGxQrVH3UHlrmW1H3d0GaXgCHOMI7o8WbUesLd-jN0o',
+  imageUrl: 'assets/profile.jpg',
   size: 400,
 )
         ),
@@ -63,7 +63,7 @@ class AboutSection extends StatelessWidget {
     return Column(
       children: [
         GlowingProfileImage(
-  imageUrl: 'https://media.licdn.com/dms/image/v2/C5603AQGnYnN9mvWyeg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1637993001187?e=1760572800&v=beta&t=YGxQrVH3UHlrmW1H3d0GaXgCHOMI7o8WbUesLd-jN0o',
+  imageUrl: 'assets/profile.jpg',
   size: 250,
 ),
         const SizedBox(height: 24),
@@ -174,7 +174,7 @@ class _GlowingProfileImageState extends State<GlowingProfileImage>
             painter: GlowBorderPainter(progress: _controller.value),
             child: ClipPath(
               clipper: WaveClipper(),
-              child: Image.network(
+              child: Image.asset(
                 widget.imageUrl,
                 fit: BoxFit.cover,
               ),

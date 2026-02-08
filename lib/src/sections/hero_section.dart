@@ -83,7 +83,7 @@ class HeroSection extends StatelessWidget {
             alignment: Alignment.center,
             child: CircleAvatar(
               radius: 120,
-              backgroundImage: const NetworkImage('https://media.licdn.com/dms/image/v2/C5603AQGnYnN9mvWyeg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1637993001187?e=1760572800&v=beta&t=YGxQrVH3UHlrmW1H3d0GaXgCHOMI7o8WbUesLd-jN0o'),
+              backgroundImage: const AssetImage('assets/profile.jpg'),
               backgroundColor: Colors.white24,
             ),
           ),
@@ -97,7 +97,7 @@ class HeroSection extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 72,
-          backgroundImage: const NetworkImage('https://media.licdn.com/dms/image/v2/C5603AQGnYnN9mvWyeg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1637993001187?e=1760572800&v=beta&t=YGxQrVH3UHlrmW1H3d0GaXgCHOMI7o8WbUesLd-jN0o'),
+          backgroundImage: const AssetImage('assets/profile.jpg'),
           backgroundColor: Colors.white24,
         ),
         const SizedBox(height: 16),

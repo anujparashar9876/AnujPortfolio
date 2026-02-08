@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData buildTheme() {
   // Replace these placeholder colors with Figma tokens.
   const Color primary = Color(0xFF0A192F); // dark hero
-  const Color accent = Color(0xFF6C63FF); // accent from figma
+  const Color accent = Color.fromARGB(255, 67, 61, 190); // accent from figma
   const Color background = Color(0xFFF7F8FA);
   const Color card = Colors.white;
 
