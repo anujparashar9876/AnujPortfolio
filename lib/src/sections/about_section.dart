@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_portfolio/src/sections/animated_section.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
@@ -10,215 +9,198 @@ class AboutSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final isDesktop = width >= 900;
-    return AnimatedSection(
-      delay: const Duration(milliseconds: 300),
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 80, horizontal: isDesktop ? 96 : 24),
-        color: Colors.white,
-        child: isDesktop ? buildDesktop(context) : buildMobile(context),
+
+    return Container(
+      width: double.infinity,
+      // Use extremely dark background to match the scrapbook aesthetic shadow drop
+      padding: EdgeInsets.symmetric(vertical: 150, horizontal: isDesktop ? 96 : 24),
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+      ),
+      child: Center(
+        child: Transform.rotate(
+          angle: -0.03, // Slight paper tilt
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.center,
+            children: [
+              // 1. The Main Off-White Paper Card
+              Container(
+                width: isDesktop ? 700 : 380,
+                padding: EdgeInsets.fromLTRB(
+                  isDesktop ? 60 : 30,
+                  isDesktop ? 80 : 60,
+                  isDesktop ? 60 : 30,
+                  isDesktop ? 60 : 40,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFDCDADB), // Off-white / light grey paper
+                  borderRadius: BorderRadius.circular(2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.8),
+                      blurRadius: 50,
+                      spreadRadius: 10,
+                      offset: const Offset(15, 25),
+                    )
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'ABOUT ME.',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(
+                        fontSize: isDesktop ? 85 : 52,
+                        fontWeight: FontWeight.w900,
+                        color: const Color(0xFF151515),
+                        letterSpacing: -3,
+                        height: 1.0,
+                      ),
+                    ),
+                    
+                    SizedBox(height: isDesktop ? 70 : 50),
+                    
+                    // The Inner Layout (Row desktop, Column mobile)
+                    isDesktop
+                        ? Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: _buildContent(isDesktop),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: _buildContent(isDesktop),
+                          ),
+                          
+                    SizedBox(height: isDesktop ? 80 : 60),
+                    
+                    Text(
+                      "Let's work together!",
+                      style: GoogleFonts.dancingScript(
+                        fontSize: isDesktop ? 64 : 48,
+                        color: const Color(0xFF151515),
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // 2. The Binder Clip (Top Right)
+              Positioned(
+                top: isDesktop ? 10 : -40,
+                right: isDesktop ? 20 : -30,
+                child: Transform.rotate(
+                  angle: 1, // Deeper angle exactly like the design
+                  child: Image.asset(
+                    'assets/paper_clip.png',
+                    width: isDesktop ? 240 : 160, // Much larger to match physical scaling
+                    errorBuilder: (context, _, __) => const Icon(Icons.push_pin, size: 60, color: Colors.black87),
+                  ).animate().scale(delay: 400.ms, curve: Curves.easeOutBack),
+                ),
+              ),
+            ],
+          ),
+        ).animate().fade(duration: 800.ms).slideY(begin: 0.1),
       ),
     );
   }
 
-  Widget buildDesktop(BuildContext context) {
-    return Row(
+  List<Widget> _buildContent(bool isDesktop) {
+    final textDetails = Column(
+      crossAxisAlignment: isDesktop ? CrossAxisAlignment.end : CrossAxisAlignment.center,
       children: [
-        Expanded(
-          child: GlowingProfileImage(
-  imageUrl: 'assets/profile.jpg',
-  size: 400,
-)
+        Text(
+          'Anuj Parashar',
+          style: GoogleFonts.dancingScript(
+            fontSize: isDesktop ? 42 : 36,
+            color: const Color(0xFF151515),
+            fontWeight: FontWeight.w700,
+          ),
         ),
-        const SizedBox(width: 48),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('About Me', style: Theme.of(context).textTheme.displayMedium),
-              const SizedBox(height: 16),
-              Text(
-                'I’m a Flutter developer with experience building cross-platform apps. I focus on UI/UX, app architecture, state management, and production deployment.',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              const SizedBox(height: 20),
-              Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                children: [
-                  _skillChip('Flutter'),
-                  _skillChip('Dart'),
-                  _skillChip('Firebase'),
-                  _skillChip('REST APIs'),
-                  _skillChip('UI/UX'),
-                ],
-              ),
-            ],
+        Container(
+          height: 1,
+          width: double.infinity,
+          color: Colors.black26,
+          margin: const EdgeInsets.symmetric(vertical: 8),
+        ),
+        Text(
+          'India',
+          style: GoogleFonts.dancingScript(
+            fontSize: isDesktop ? 32 : 28,
+            color: const Color(0xFF151515),
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        Container(
+          height: 1,
+          width: double.infinity,
+          color: Colors.black26,
+          margin: const EdgeInsets.only(top: 8, bottom: 24),
+        ),
+        Text(
+          "I'm a Flutter developer helping ideas become visually strong and robust applications. I value clean architecture, engaging UI, and purpose in everything I do.",
+          textAlign: isDesktop ? TextAlign.right : TextAlign.center,
+          style: GoogleFonts.inter(
+            fontSize: 15,
+            color: const Color(0xFF4A4A4A),
+            height: 1.6,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],
     );
-  }
 
-  Widget buildMobile(BuildContext context) {
-    return Column(
-      children: [
-        GlowingProfileImage(
-  imageUrl: 'assets/profile.jpg',
-  size: 250,
-),
-        const SizedBox(height: 24),
-        Text('About Me', style: Theme.of(context).textTheme.displayMedium),
-        const SizedBox(height: 12),
-        Text(
-          'I’m a Flutter developer with experience building cross-platform apps. I focus on UI/UX and clean architecture.',
-          style: Theme.of(context).textTheme.bodyLarge,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 16),
-        Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          alignment: WrapAlignment.center,
-          children: [
-            _skillChip('Flutter'),
-            _skillChip('Dart'),
-            _skillChip('Firebase'),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _skillChip(String label) {
-    return Chip(
-      label: Text(label),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-    );
-  }
-}
-
-class WaveClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-
-    // Start from top-left
-    path.moveTo(0, 30);
-
-    // Top wave
-    path.quadraticBezierTo(
-        size.width / 4, 0, size.width / 2, 30);
-    path.quadraticBezierTo(
-        3 * size.width / 4, 60, size.width, 30);
-
-    // Right edge
-    path.lineTo(size.width, size.height - 30);
-
-    // Bottom wave
-    path.quadraticBezierTo(
-        3 * size.width / 4, size.height, size.width / 2, size.height - 30);
-    path.quadraticBezierTo(
-        size.width / 4, size.height - 60, 0, size.height - 30);
-
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
-
-
-class GlowingProfileImage extends StatefulWidget {
-  final String imageUrl;
-  final double size;
-
-  const GlowingProfileImage({
-    super.key,
-    required this.imageUrl,
-    this.size = 220,
-  });
-
-  @override
-  State<GlowingProfileImage> createState() => _GlowingProfileImageState();
-}
-
-class _GlowingProfileImageState extends State<GlowingProfileImage>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 4),
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: widget.size,
-      height: widget.size,
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, _) {
-          return CustomPaint(
-            painter: GlowBorderPainter(progress: _controller.value),
-            child: ClipPath(
-              clipper: WaveClipper(),
-              child: Image.asset(
-                widget.imageUrl,
-                fit: BoxFit.cover,
+    return [
+      // Left/Top: Polaroid Frame with Clip
+      Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            width: isDesktop ? 260 : 220,
+            height: isDesktop ? 300 : 260,
+            decoration: const BoxDecoration(
+              color: Color(0xFFF0F0F0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 15,
+                  offset: Offset(0, 8),
+                )
+              ],
+            ),
+            padding: const EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 50),
+            child: Image.asset(
+              'assets/profile.jpg',
+              fit: BoxFit.cover,
+              errorBuilder: (context, _, __) => Container(
+                color: Colors.grey[800],
+                child: const Icon(Icons.person, size: 60, color: Colors.white),
               ),
             ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class GlowBorderPainter extends CustomPainter {
-  final double progress;
-  GlowBorderPainter({required this.progress});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final path = WaveClipper().getClip(size);
-
-    final Paint paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 10;
-
-    // Create a moving sweep gradient
-    final gradient = SweepGradient(
-      startAngle: 0,
-      endAngle: 2 * pi,
-      transform: GradientRotation(2 * pi * progress),
-      colors: [
-        Colors.blueAccent.withOpacity(0.8),
-        const Color.fromARGB(255, 64, 251, 164).withOpacity(0.8),
-        Colors.pinkAccent.withOpacity(0.8),
-        Colors.blueAccent.withOpacity(0.8),
-      ],
-      stops: const [0.0, 0.3, 0.7, 1.0],
-    );
-
-    paint.shader = gradient.createShader(Rect.fromLTWH(0, 0, size.width, size.height));
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant GlowBorderPainter oldDelegate) {
-    return oldDelegate.progress != progress;
+          ),
+          
+          // Paper Clip hovering on the portrait
+          Positioned(
+            left: -20,
+            top: 20,
+            child: Transform.rotate(
+              angle: -0.05,
+              child: Image.asset(
+                'assets/paper_clip.png',
+                width: 90, // Taller structure exactly mapping the reference image
+                errorBuilder: (context, _, __) => const SizedBox(),
+              ),
+            ),
+          ),
+        ],
+      ).animate().fade(delay: 200.ms).rotate(begin: -0.05, end: 0, curve: Curves.easeOutBack),
+      
+      SizedBox(width: isDesktop ? 40 : 0, height: isDesktop ? 0 : 40),
+      
+      // Right/Bottom: Handwritten Details
+      isDesktop ? Expanded(child: textDetails) : textDetails,
+    ];
   }
 }

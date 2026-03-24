@@ -2,31 +2,53 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 ThemeData buildTheme() {
-  // Replace these placeholder colors with Figma tokens.
-  const Color primary = Color(0xFF0A192F); // dark hero
-  const Color accent = Color.fromARGB(255, 67, 61, 190); // accent from figma
-  const Color background = Color(0xFFF7F8FA);
-  const Color card = Colors.white;
+  const Color primary = Color(0xFF0F172A); // Modern dark blue
+  const Color accent = Color(0xFF38BDF8); // Vibrant light blue
+  const Color background = Color(0xFF080F1F); // Darker background
+  const Color card = Color(0xFF1E293B);
 
-  final base = ThemeData.light();
+  final base = ThemeData.dark();
 
   return base.copyWith(
     scaffoldBackgroundColor: background,
     primaryColor: primary,
-    colorScheme: base.colorScheme.copyWith(primary: primary, secondary: accent),
-    textTheme: GoogleFonts.poppinsTextTheme().copyWith(
-      displayLarge: GoogleFonts.poppins(fontSize: 48, fontWeight: FontWeight.bold, color: primary),
-      displayMedium: GoogleFonts.poppins(fontSize: 36, fontWeight: FontWeight.w700, color: primary),
-      headlineSmall: GoogleFonts.poppins(fontSize: 22, fontWeight: FontWeight.w600, color: primary),
-      bodyLarge: GoogleFonts.poppins(fontSize: 18, color: Colors.black87, height: 1.6),
-      bodyMedium: GoogleFonts.poppins(fontSize: 16, color: Colors.black54),
+    colorScheme: base.colorScheme.copyWith(
+      primary: accent, 
+      secondary: accent, 
+      surface: card,
+    ),
+    textTheme: GoogleFonts.outfitTextTheme(base.textTheme).copyWith(
+      displayLarge: GoogleFonts.outfit(fontSize: 56, fontWeight: FontWeight.bold, color: Colors.white, height: 1.1),
+      displayMedium: GoogleFonts.outfit(fontSize: 40, fontWeight: FontWeight.w700, color: Colors.white),
+      headlineSmall: GoogleFonts.outfit(fontSize: 24, fontWeight: FontWeight.w600, color: accent),
+      bodyLarge: GoogleFonts.outfit(fontSize: 18, color: Colors.white70, height: 1.6),
+      bodyMedium: GoogleFonts.outfit(fontSize: 16, color: Colors.white60),
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: false,
-      iconTheme: IconThemeData(color: Colors.black87),
+      iconTheme: IconThemeData(color: Colors.white),
     ),
     cardColor: card,
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: accent,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        textStyle: GoogleFonts.outfit(fontSize: 16, fontWeight: FontWeight.w600),
+        elevation: 0,
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: Colors.white,
+        side: const BorderSide(color: Colors.white24, width: 1.5),
+        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        textStyle: GoogleFonts.outfit(fontSize: 16, fontWeight: FontWeight.w600),
+      ),
+    ),
   );
 }
